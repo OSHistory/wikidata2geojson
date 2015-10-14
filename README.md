@@ -9,9 +9,11 @@ Turns a wikidata query into a geojson file
 
 => Creates a geojson file with the birthplaces of all popes.
 
+See [wikidata API documentation] (https://wdq.wmflabs.org/api_documentation.html) for how to query the wikidata database.
+
 ## To Do:
 
 * Add option to set more properties for the features
 * Create a simple web map (Leaflet/OL3) to quickly
 view the result
-* Add option to flip the geocoordinates 
+* Add option to flip the geocoordinates
