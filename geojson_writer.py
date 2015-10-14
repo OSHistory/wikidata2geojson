@@ -10,6 +10,7 @@ import sys
 
 class GeoJSONWriter():
 
+
     def __init__(self, query, geojson_path, place_claim="P19", quick_map=False, properties):
         self.wf = WikiFetcher()
         self.pr = PlaceResolver("places.json")
