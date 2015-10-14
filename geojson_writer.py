@@ -11,7 +11,7 @@ import sys
 class GeoJSONWriter():
 
 
-    def __init__(self, query, geojson_path, place_claim="P19", quick_map=False, properties):
+    def __init__(self, query, geojson_path, place_claim="P19", quick_map=False, properties=None):
         self.wf = WikiFetcher()
         self.pr = PlaceResolver("places.json")
         self.STEP = 50
@@ -30,6 +30,8 @@ class GeoJSONWriter():
         print("(Equals " + str(round(100 * (self.place_info_cnt / len(items)), 2)) + "%)")
 
     def __resolve_properties(self, properties):
+        if (properties == None):
+            return None 
         split_props = properties.split(":")
         props = [prop.split("/") for prop in split_props]
         return props

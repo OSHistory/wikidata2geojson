@@ -9,7 +9,7 @@ parser = optparse.OptionParser()
 parser.add_option("-q", "--query", dest="query", default=None)
 parser.add_option("-o", "--output-file", dest="output_file", default=None)
 parser.add_option("-i", "--id-place-claim", dest="place_claim", default="P19")
-parser.add_option("-p", "--properties", dest="properties", default=None)
+#parser.add_option("-p", "--properties", dest="properties", default=None)
 opts, remainder = parser.parse_args()
 
 query = opts.query
