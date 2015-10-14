@@ -10,14 +10,12 @@ import sys
 
 class GeoJSONWriter():
 
-
-    def __init__(self, query, geojson_path, place_claim="P19", quick_map=False, properties=None):
+    def __init__(self, query, geojson_path, place_claim="P19"):
         self.wf = WikiFetcher()
         self.pr = PlaceResolver("places.json")
         self.STEP = 50
         self.DEBUG_DIR = "debug"
         self.place_claim = place_claim
-        self.properties = self.__resolve_properties(properties)
         self.db = json.loads('{"entities": {} }')
         self.place_info_cnt = 0
         items = self.wf.get_items_from_query(query)
@@ -28,13 +26,6 @@ class GeoJSONWriter():
         self.pr.close_failed_places()
         print("Written " + str(self.place_info_cnt) + " items with geoinformation to geojson file...")
         print("(Equals " + str(round(100 * (self.place_info_cnt / len(items)), 2)) + "%)")
-
-    def __resolve_properties(self, properties):
-        if (properties == None):
-            return None 
-        split_props = properties.split(":")
-        props = [prop.split("/") for prop in split_props]
-        return props
 
     def save_database(self, datapath):
         dir_path = os.path.dirname(datapath)
