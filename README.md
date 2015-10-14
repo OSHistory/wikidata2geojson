@@ -1,3 +1,4 @@
+
 # wikidata2geojson
 
 ## Purpose
@@ -14,6 +15,4 @@ See [wikidata API documentation] (https://wdq.wmflabs.org/api_documentation.html
 ## To Do:
 
 * Add option to set more properties for the features
-* Create a simple web map (Leaflet/OL3) to quickly
-view the result
 * Add option to flip the geocoordinates
