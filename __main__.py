@@ -15,7 +15,7 @@ opts, remainder = parser.parse_args()
 query = opts.query
 output_file = opts.output_file
 place_claim = opts.place_claim
-properties = opt.properties
+#properties = opt.properties
 
 if (query == None):
     print("Fatal Error: No query specified!")
