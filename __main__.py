@@ -9,13 +9,13 @@ parser = optparse.OptionParser()
 parser.add_option("-q", "--query", dest="query", default=None)
 parser.add_option("-o", "--output-file", dest="output_file", default=None)
 parser.add_option("-i", "--id-place-claim", dest="place_claim", default="P19")
-#parser.add_option("-p", "--properties", dest="properties", default=None)
+parser.add_option("-p", "--properties", dest="properties", default=None)
 opts, remainder = parser.parse_args()
 
 query = opts.query
 output_file = opts.output_file
 place_claim = opts.place_claim
-
+properties = opt.properties
 
 if (query == None):
     print("Fatal Error: No query specified!")
@@ -25,4 +25,4 @@ if (output_file == None):
     output_file = "data/" + str(time.time()).replace(".", "") + ".geojson"
     print("Output set to " + output_file)
 
-gw = GeoJSONWriter(query, output_file, place_claim)
+gw = GeoJSONWriter(query, output_file, place_claim, properties)
