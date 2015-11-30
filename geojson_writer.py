@@ -22,7 +22,6 @@ class GeoJSONWriter():
         print("Fetched " + str(len(items)) + " from query...")
         self.process_items(items)
         self.write_geojson(geojson_path)
-        data_path = self.__resolve_data_path(data_path, geojson_path)
         self.save_database(data_path)
         self.pr.close_failed_places()
         print("Written " + str(self.place_info_cnt) + " items with geoinformation to geojson file...")
