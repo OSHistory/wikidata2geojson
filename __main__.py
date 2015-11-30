@@ -24,4 +24,4 @@ if (output_file == None):
     output_file = "data/" + str(time.time()).replace(".", "") + ".geojson"
     print("Output set to " + output_file)
 
-gw = GeoJSONWriter(query, output_file, place_claim, properties)
+gw = GeoJSONWriter(query, output_file, place_claim)
