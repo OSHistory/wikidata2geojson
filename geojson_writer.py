@@ -56,7 +56,7 @@ class GeoJSONWriter():
             if ("P625" in self.db["entities"][entity]["claims"]): 
                 place_id = entity
                 place_info, exception = self.pr.get_place_info_from_json(self.db["entities"][entity])
-                feature = self.build_feature(place_info["name"], [place_info["lon"], place_info["lat"]])
+                feature = self.build_feature(entity, place_info["name"], [place_info["lon"], place_info["lat"]])
                 geojson["features"].append(feature)
                 self.place_info_cnt += 1
                 
@@ -68,7 +68,7 @@ class GeoJSONWriter():
                         if (self.pr.place_not_none(place_id)):
                             name = self.get_name(self.db["entities"][entity])
                             coords = self.pr.return_lon_lat(place_id)
-                            feature = self.build_feature(name, coords)
+                            feature = self.build_feature(entity, name, coords)
                             #feature["properties"]["name"] = self.get_name(self.db["entities"][entity])
                             #feature["geometry"]["coordinates"] = self.pr.return_lon_lat(place_id)
                             geojson["features"].append(feature)
@@ -81,7 +81,7 @@ class GeoJSONWriter():
         json.dump(geojson, fh)
         fh.close()
 
-    def build_feature(self, name, coords):
+    def build_feature(self, wikiid, name, coords):
         feature = json.loads("""{
             "properties": { },
             "geometry": {
@@ -90,6 +90,7 @@ class GeoJSONWriter():
             },
             "type": "Feature"
         }""")
+        feature["properties"]["wikiid"] = wikiid
         feature["properties"]["name"] = name
         feature["geometry"]["coordinates"] = coords
         
