@@ -50,35 +50,52 @@ class GeoJSONWriter():
         for entity in self.db["entities"]:
             # TODO: set properties to be written via cmd-line
             #print(entity)
-            feature = json.loads("""{
-                "properties": { },
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [null, null]
-                },
-                "type": "Feature"
-            }""")
-            if (self.place_claim in self.db["entities"][entity]["claims"]):
+            place_id = None
+            # check if 625 already in object itself (then use own wikidata-id) 
+            # Problem: double processing of the same entity
+            if ("P625" in self.db["entities"][entity]["claims"]): 
+                print("Has loc")
+                place_id = entity
+                place_info, exception = self.pr.get_place_info_from_json(self.db["entities"][entity])
+                feature = self.build_feature(place_info["name"], [place_info["lon"], place_info["lat"]])
+                geojson["features"].append(feature)
+                self.place_info_cnt += 1
+                
+            elif (self.place_claim in self.db["entities"][entity]["claims"]):
                 try:
                     place_id = self.db["entities"][entity]["claims"][self.place_claim][0]["mainsnak"]["datavalue"]["value"]["numeric-id"]
                     place_id = "Q" + str(place_id)
                     if (self.pr.has_place(place_id)):
                         if (self.pr.place_not_none(place_id)):
-                            feature["properties"]["name"] = self.get_name(self.db["entities"][entity])
-                            if (feature["properties"]["name"] == ""):
-                                print(json.dumps(self.db["entities"][entity], indent=7))
-                                sys.exit(1)
-                            feature["geometry"]["coordinates"] = self.pr.return_lon_lat(place_id)
+                            name = self.get_name(self.db["entities"][entity])
+                            coords = self.pr.return_lon_lat(place_id)
+                            feature = self.build_feature(name, coords)
+                            #feature["properties"]["name"] = self.get_name(self.db["entities"][entity])
+                            #feature["geometry"]["coordinates"] = self.pr.return_lon_lat(place_id)
                             geojson["features"].append(feature)
                             self.place_info_cnt += 1
                 except Exception as e:
                     print("Exception processing entity: " + entity)
                     print(e)
-
+                
         fh = open(geojson_path, "w+")
         json.dump(geojson, fh)
         fh.close()
 
+    def build_feature(self, name, coords):
+        feature = json.loads("""{
+            "properties": { },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [null, null]
+            },
+            "type": "Feature"
+        }""")
+        feature["properties"]["name"] = name
+        feature["geometry"]["coordinates"] = coords
+        
+        return feature
+        
     def get_name(self, entity):
         if ("en" in entity["labels"]):
             if ("value" in entity["labels"]["en"]):
