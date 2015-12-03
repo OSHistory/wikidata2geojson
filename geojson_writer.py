@@ -54,7 +54,6 @@ class GeoJSONWriter():
             # check if 625 already in object itself (then use own wikidata-id) 
             # Problem: double processing of the same entity
             if ("P625" in self.db["entities"][entity]["claims"]): 
-                print("Has loc")
                 place_id = entity
                 place_info, exception = self.pr.get_place_info_from_json(self.db["entities"][entity])
                 feature = self.build_feature(place_info["name"], [place_info["lon"], place_info["lat"]])
