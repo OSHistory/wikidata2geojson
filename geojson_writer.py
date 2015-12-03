@@ -29,7 +29,7 @@ class GeoJSONWriter():
 
     def save_database(self, data_path, geojson_path):
         if (data_path == None):
-            data_path = geojson_path.replace("geojson", "-data.json")
+            data_path = geojson_path.replace(".geojson", "-data.json")
         dir_path = os.path.dirname(data_path)
         if (dir_path != ""):
             if (os.path.exists(dir_path) == False):
