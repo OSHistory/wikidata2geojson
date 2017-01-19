@@ -1,7 +1,7 @@
 
 # wikidata2geojson
 
-# OLD API IS NON REACHABLE 
+# OLD API IS NON REACHABLE! WILL CURRENTLY NOT WORK 
 
 ## Purpose
 
